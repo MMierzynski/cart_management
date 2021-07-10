@@ -19,6 +19,15 @@ class CartRepository extends ServiceEntityRepository
         parent::__construct($registry, Cart::class);
     }
 
+    /**
+     * @param int $userId
+     * @return int|mixed|string
+     */
+    public function findDefaultCartForUser(int $userId)
+    {
+        return $this->findOneBy(['name' => 'default', 'user' => $userId]);
+    }
+
     // /**
     //  * @return Cart[] Returns an array of Cart objects
     //  */
