@@ -11,12 +11,13 @@
         <div class="col-4">
             <p>Category: <span>{{ product.category.name }}</span></p>
             <p>Price: <span>{{ product.price }} €</span></p>
-            <form action="#">
+
+            {{ form_start(form) }}
                 <div class="input-group mb-3">
-                    <input type="number" class="form-control" placeholder="Amount" min="0" aria-label="Amount">
-                    <input type="submit" class="btn btn-primary" value="Add to cart">
+                    {{ form_widget(form.amount) }}
+                    {{ form_widget(form.toCartBtn) }}
                 </div>
-            </form>
+            {{ form_end(form) }}
         </div>
     </div>
 
