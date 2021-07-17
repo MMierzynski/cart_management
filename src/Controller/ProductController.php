@@ -23,7 +23,9 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $cart = $cartManager->getCart();
             if (!$cart) {
+                $this->addFlash('error', 'Cannot add the product to cart');
 
+                return $this->redirectToRoute('product.details', ['id' => $product->getId()]);
             }
 
             /** @var CartItem $cartItem */
@@ -32,7 +34,6 @@ class ProductController extends AbstractController
 
             $cart->addItem($cartItem);
             $cartManager->updateCart($cart);
-            dd($cartManager->getCart());
         }
 
         return $this->render('product/details.html.twig', [

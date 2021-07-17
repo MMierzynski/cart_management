@@ -3,6 +3,13 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block body %}
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-warning">
+            {{ message }}
+        </div>
+    {% endfor %}
+
     <div class="row">
         <h1 class="text-center">{{ product.name }}</h1>
     </div>
