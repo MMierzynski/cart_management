@@ -2,10 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\CartRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=CartRepository::class)
@@ -67,7 +65,19 @@ class Cart
 
     public function addItem(CartItem $item): self
     {
-        if (!$this->items->contains($item)) {
+        /** @var CartItem $cartItem */
+        foreach ($this->items as $cartItem){
+
+            if ( $item->getProduct()->getId() === $cartItem->getProduct()->getId()) {
+                $cartItem->setAmount($cartItem->getAmount() + $item->getAmount());
+            }
+            else {
+                $this->items[] = $item;
+                $item->setCart($this);
+            }
+        }
+
+        if (0 == $this->items->count()) {
             $this->items[] = $item;
             $item->setCart($this);
         }
